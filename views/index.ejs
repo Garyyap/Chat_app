@@ -1,0 +1,174 @@
+<html>
+
+   <head>
+
+   	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+
+      <title>Welcome</title>
+
+      <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		
+		<!-- Bootstrap need Jquery!!, and place Jquery CDN before Bootstrap CDN-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+
+      <script type="text/javascript">
+
+         function check_particular(){
+
+             var username = document.getElementById('chatIDorEmail').value;
+             var password = document.getElementById('pwd').value;
+
+             if(username == "" || password == ""){
+               return false;
+             }else{
+               return true;             
+            }
+
+         }
+
+         $(document).ready(function(){
+
+         	$('#alert').hide();
+        
+            $('#signup_btn').on('click',function(){
+                $(location).attr('href','/signup');
+            });
+
+            $('#login_form').on('submit',function(){
+                event.preventDefault();
+                var $username = $('#chatIDorEmail');
+                var $pwd = $('#pwd');
+
+                if(check_particular() == true){
+
+                    $.ajax({
+                      url:'/userdetails',
+                      method:'POST',
+                      contentType:'application/json',
+                      data: JSON.stringify({username: $username.val(),password: $pwd.val()}),
+                      success: function(data){
+                      
+                        if(data.state == 'true'){
+                          $(location).attr('href',data.url);
+                        }else{
+                        	$('#alert').show();
+                            $('#alert').empty();
+                            $('#alert').append('<strong>'+'   * Invalid username or password'+'</strong>');
+                        }
+                      }
+                    });
+            
+                }else{
+                    $('#alert').show();
+                    $('#alert').empty();
+                    $('#alert').append('<strong>' + '   * Please fill in the required field' + '</strong>');          
+                }
+
+            });
+
+
+         });
+
+      </script>
+
+      <style type="text/css">
+
+      	  html, body {
+           background-color:  #666699;
+         }
+
+         .padding-top-10{
+         	margin-top: 10px;
+         }
+
+         .padding-top-15{
+         	margin-top: 15px;
+         }
+
+        hr{
+		    border: none;
+		    height: 1px;
+		    /* Set the hr color */
+		    color: #a6a6a6; /* old IE */
+		    background-color: #a6a6a6; /* Modern Browsers */
+		}
+
+      </style>
+
+     
+   </head>
+
+   <body>
+
+   		<div class="container padding-top-10">
+	   		<div id="alert" class="alert alert-danger" role="alert"></div>
+	   	</div>
+	  	
+	   	<div class="container padding-top-10">
+
+	  		<div class="panel panel-default">
+
+	     		<div class="panel-heading"><strong>Login&nbsp&nbsp</strong><span class="glyphicon glyphicon-user"></span></div>
+				  	<div class="panel-body">
+
+					  		<form id="login_form" method="POST">
+
+					  			<div class="input-group col-xs-12 col-md-6 col-md-offset-3 padding-top-10">
+					  				<span class="input-group-addon">
+					  					<span class="glyphicon glyphicon-envelope"></span>
+					  				</span>
+					  					<input type="Email" class="form-control" name="email" id="chatIDorEmail" placeholder="Your email">
+					  			</div>
+
+					  			<div class="input-group col-xs-12  col-md-6 col-md-offset-3 padding-top-10">
+					  				<span class="input-group-addon">
+					  					<span class="glyphicon glyphicon-lock"></span>
+					  				</span>
+					  					<input type="password" class="form-control" name="password" id="pwd" placeholder="Password">
+					  			</div>
+
+					  			<div class="input-group col-xs-12 col-md-6 col-md-offset-3 padding-top-10">
+					  				<input type="checkbox" checked data-toggle="toggle" data-size="small"/>
+					  				<span>&nbsp Remember me!</span>
+					  			</div>
+
+					  			<div class="input-group col-xs-12 col-md-6 col-md-offset-3 padding-top-15">
+					  				<button type="submit" class="btn btn-success btn-block"><strong> Login </strong></button>
+					  			</div>
+
+					  			<div class="input-group col-xs-12 col-md-6 col-md-offset-3 padding-top-10">
+					  				<button id="signup_btn" type="button" class="btn btn-primary btn-block"><strong> Create Account </strong></button>
+					  			</div>
+								
+						  		<div class="input-group col-xs-12 col-md-6 col-md-offset-3 padding-top-10">
+						  			<button id="forgot_btn" type="button" class="btn btn-link btn-block">Forgot Password?</button>
+						  		</div>
+
+						  		<hr style="margin-top:8px;"/>
+
+					  		</form>
+
+					</div>
+				</div>
+	     	</div>
+
+	   	</div>
+             
+   </body>
+
+
+</html>

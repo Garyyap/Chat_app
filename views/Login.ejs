@@ -1,0 +1,121 @@
+<html>
+
+	<head>
+		 <title>Welcome</title>
+
+		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		
+		<!-- Bootstrap need Jquery!!, and place Jquery CDN before Bootstrap CDN-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<style>
+			.padding-top-10{
+				padding-top: 10px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="container padding-top-10">
+			<div class="panel panel-default">
+				<div class="panel-heading">Registration</div>
+				<div class="panel-body">
+					<form>
+						<label for="firstname" class="control-label">Name:</label>
+						<div class="row">
+							<div class="col-md-6  padding-top-10">
+								<input type="text" class="form-control" id="firstname" placeholder="Firstname">
+							</div>
+							<div class="col-md-6  padding-top-10">
+								<input type="text" class="form-control" id="lastname" placeholder="Lastname">
+							</div>
+						</div>
+
+						<label for="address1" class="control-label padding-top-10">Address:</label>
+						<div class="row padding-top-10">
+							<div class="col-md-12">
+								<input type="text" class="form-control" id="address1" placeholder="Address line 1">	
+							</div>
+						</div>
+
+						<div class="row padding-top-10">
+							<div class="col-md-12">
+								<input type="text" class="form-control" id="address2" placeholder="Address line 2">	
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 padding-top-10">
+								<label for="city" class="control-label">City:</label>
+								<input type="text" class="form-control" id="city" placeholder="Your city">
+							</div>
+
+							<div class="col-md-2 padding-top-10">
+								<label for="stateregion" class="control-label">State / region:</label>
+								<input type="text" class="form-control" id="stateregion" placeholder="Your state / region">
+							</div>
+
+							<div class="col-md-4 padding-top-10">
+								<label for="zipcode" class="control-label">Zip:</label>
+								<input type="text" class="form-control" id="zipcode" placeholder="Your zipcode">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 padding-top-10">
+								<label for="email" class="control-label">Email Address:</label>
+								<input type="text" class="form-control" id="email" placeholder="Email Address"/>
+							</div>
+
+							<div class="col-md-6 padding-top-10">
+								<label for="communicationpreference" class="control-label">Communication Preference:</label>
+								<select id="communicationpreference" class="form-control">
+									<option value="text">Plain Text</option>
+									<option value="html">HTML</option>>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 padding-top-10">
+								<label for="password" class="control-label">Password:</label>
+								<input type="password" class="form-control" id="password" placeholder="Password" />
+							</div>
+							<div class="col-md-6 padding-top-10">
+								<label for="repassword" class="control-label">Reconfirm Password:</label>
+								<input type="password" class="form-control" id="repassword" placeholder="Reconfirm password" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 padding-top-10">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox"/>Click here to subscribe to our newsletter.
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-2">
+								<button type="button" class="btn btn-success">Register!</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+
+</html>

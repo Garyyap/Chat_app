@@ -1,0 +1,310 @@
+<html>
+
+  <head>
+
+  		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<title>Sign Up</title>
+
+		<!-- Bootstrap need Jquery to run!!, and place Jquery CDN before Bootstrap CDN-->
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+				
+		 <!-- Latest compiled and minified CSS -->
+		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		 <!-- Selectpicker CDN-->
+		 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"   crossorigin="anonymous"></script>
+
+        <!-- Selectpicker CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+        <script src="https://use.fontawesome.com/646de76c28.js"></script>
+
+        <!--Date picker-->
+		<script src="dobPicker.min.js"></script>
+
+		<script src="jquery-birthday-picker.js"></script>
+
+       
+		<script>
+
+		        $(document).ready(function(){
+
+		              var $first_name = $('#first_name'),
+		                  $last_name = $('#last_name'),
+		                  $email = $('#email'),
+		                  $password = $('#password'),
+		                  $re_password = $('#re-password'),
+		                  $Gender = $('#Gender'),
+		                  field_error = false;
+
+		               function date_format(day , month , year){
+		               		return ( month + '/' + day + '/'+year);
+		               }
+		         
+		   			  $('#birthday').birthdayPicker();
+
+		              $('#login_form').on('submit',function(event){
+
+		                  //check for empty field 
+		                  $(this).find('input[type="password"], input[type="text"] , input[type="email"]').each(function(){
+
+		                      if($('#'+this.id).val() == ''){
+
+		                        switch($('#'+this.id).next().attr('id')){
+		                          case 'First_name_alert':
+		                              field_error = true;
+		                              if($('#First_name_alert').text() == ''){
+		                                $('#First_name_alert').append('*First name is required!');
+		                              }
+		                          break;
+
+		                          case 'Last_name_alert':
+		                             field_error = true;
+		                             if( $('#Last_name_alert').text() == ''){
+		                                $('#Last_name_alert').append('*Last name is required!');
+		                             }
+		                          break;
+
+		                          case 'Email_alert':
+		                              field_error = true;
+		                              if($('#Email_alert').text()== ''){
+		                                $('#Email_alert').append('*Email is required!');
+		                              }
+		                          break;
+
+		                          case 'Password_alert':
+		                              field_error = true;
+		                              if($('#Password_alert').text() == ''){
+		                                $('#Password_alert').append('*Password is required!');
+		                              }
+		                          break;
+
+		                          case 'Re_password_alert':
+		                              field_error = true;
+		                              if($('#Re_password_alert').text() == ''){
+		                                $('#Re_password_alert').append('*Confirm password is required!');
+		                              }
+		                          break;
+
+		                          default:
+		                              field_error = true;
+		                          break;
+
+		                        }
+		                      }else{
+		                        $('#'+this.id).next().empty();
+		                      }
+		                  });
+
+		                  if(field_error == false){
+		                        
+		                        $.ajax({
+
+		                            url:'/signup_details',
+		                            method:'POST',
+		                            contentType:'application/json',
+		                            data: JSON.stringify({Firstname: $first_name.val(), Lastname: $last_name.val(),
+		                            Email: $email.val() , Password: $password.val() , RePassword: $re_password.val(),
+		                            Gender: $Gender.val(), Birthday: date_format($('#day option:selected').text(),$('#month option:selected').text(),$('#year option:selected').text())}),
+		                            success: function(data){
+
+			                            switch(data[0].state_name){
+
+				                              case 'logic_array':
+
+				                              	if(data[0].state == false){
+				                              		//duplicated email found
+					                              	$('#email').next().empty();
+						                            $('#email').next().append('*Email has already been registered');
+				                             	}
+				                              	else
+				                              	if(data[1].state == false){
+				                              		//confirm password not match
+				                              		$('#re-password').next().empty();
+						                            $('#re-password').next().append('*Confirm password not match');
+				                              	}
+
+				                              break;
+
+				                              case 'details_ok':
+				                              	//use model to tell submittion is succeful
+				                              	$("#success_modal").modal('show');
+				                              	//redirect to main page?
+				                              break;
+
+				                              default:
+				                              break;
+
+			                            }
+		                            }
+		                        });
+		                  }
+
+		                event.preventDefault();
+		                field_error = false; //restore to default
+		              });
+		        });
+		</script>
+
+	  	<style>
+
+	  		body{
+       		  background-color:  #666699;
+       		}
+
+			@media (max-width: 767px){
+
+				.padding-top-10{
+					padding-top: 10px;
+				}
+
+				.birthday_margin{
+					margin-right: 0px;
+					margin-left: 0px;
+				}
+
+				.birthday_padding_left{
+					padding-left: 2px;
+				}
+
+				.birthday_padding_right{
+					padding-right: 2px;
+				}
+			}
+
+			@media (min-width: 770px){
+
+				.padding-top-10{
+					padding-top: 10px;
+				}
+
+				.birthday_margin{
+					margin-right: 0px;
+					margin-left: 0px;
+				}
+
+				.birthday_padding_left{
+					padding-left: 2px;
+				}
+
+				.birthday_padding_right{
+					padding-right: 2px;
+				}
+			}
+		</style>
+
+
+  </head>
+	
+
+   <body>
+
+   		<div class="container padding-top-10">
+
+   			<ul class="row breadcrumb breadcrumb">
+	  			<li><a href="index"><strong>Home</strong></a></li>
+	  			<li class="active"><strong>Register</strong></li>
+	  		</ul>
+
+
+   			<div class="row">
+   				<div class="panel panel-default">
+   					<div class="panel-heading"><strong>Registration</strong></div>
+   					<div class="panel-body">
+   						<form method="POST"  class="form-horizontal  col-md-offset-4"  id="login_form">
+
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">First name</label>
+	   									<input type="text" placeholder="First name" class="form-control padding-top-10" id="first_name">
+	                                  	<span style="color:red;" id="First_name_alert"></span>
+	   								</div>
+	   							</div>
+
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">Last name</label>
+										<input type="text" placeholder="Last name" class="form-control padding-top-10" id="last_name">
+	                                  	<span style="color:red;" id="Last_name_alert"></span>	
+	   								</div>
+	   							</div>
+
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">Email Address</label>
+	   									<input type="email" placeholder="Your Email" class="form-control" id="email">
+                                	    <span style="color:red;" id="Email_alert"></span>
+	   								</div>
+	   							</div>
+
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">Password</label>
+										<input type="password" placeholder="Password" class="form-control" id="password">
+                                 		<span style="color:red;" id="Password_alert"></span>	
+	   								</div>
+	   							</div>
+
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">Confirm password</label>
+	   									<input type="password" placeholder="Confirm Password" class="form-control" id="re-password">
+                                  		<span style="color:red;" id="Re_password_alert"></span>
+	   								</div>
+	   							</div>
+
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">Gender</label>
+	   									<select class="selectpicker show-tick form-control" id="Gender">
+	   										<option>Male</option>
+	   										<option>Female</option>
+	   									</select>
+	   								</div>
+	   							</div>
+
+	  
+	   							<div class="row">
+	   								<div class="col-xs-12 col-md-7 padding-top-10">
+	   									<label class="control-label">Birthday</label>
+	   								</div>
+	   							</div>
+
+	   							<div class="row">
+	   								<div id="birthday" class="col-xs-12 col-md-7"></div>
+	   							</div>
+	   							
+	   							<div class="row padding-top-10">
+	   								<div class="col-xs-4 col-md-7 padding-top-10" style="margin-top:10px">
+	   									<button type="submit" id="signup_btn" class="btn btn-danger">Sign up!</i></button>
+	   								</div>
+
+	   							</div>
+
+   						</form>
+   					</div>
+
+   				</div>
+   			</div>
+   		</div>
+
+   		<div class="modal fade" id="success_modal" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+					    <h4 class="modal-title">Your Account has been successfully created</h4>
+					</div>
+					<div class="modal-footer">
+					   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				 </div>
+			</div>
+		</div>
+
+     
+   </body>
+
+
+</html>
