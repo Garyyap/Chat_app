@@ -1,3 +1,5 @@
+//This is a backend code =)
+
 var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
